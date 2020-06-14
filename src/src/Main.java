@@ -21,7 +21,7 @@ public class Main {
                     break;
                 }
                 Cidade cidade = new Cidade();
-                for (int i = 0; i < numeroLocais; i++) {
+                for (int i = 1; i <= numeroLocais; i++) {
                     cidade.addLocal(new Local(i));
                 }
 
@@ -31,6 +31,7 @@ public class Main {
                     Local localDestino = cidade.getLocal(linha_rua[1]);
                     int tempo = linha_rua[2];
                     Rua rua = new Rua(localInicio, localDestino, tempo);
+                    localInicio.addRua(rua);
                 }
                 
                 int[] locais = readLine(scn);
