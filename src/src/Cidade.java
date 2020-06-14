@@ -52,17 +52,6 @@ public class Cidade {
         this.idLocaisVisitados.add(id);
     }
 
-    public boolean isLocalVisitado(int id) {
-        for (Iterator<Integer> it = idLocaisVisitados.iterator(); it.hasNext();) {
-            Integer idCorrente = it.next();
-            if (idCorrente == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //overload
     public boolean isLocalVisitado(Local local) {
         for (Iterator<Integer> it = idLocaisVisitados.iterator(); it.hasNext();) {
             Integer idCorrente = it.next();
