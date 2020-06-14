@@ -3,11 +3,13 @@ package src;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class Cidade {
 
     private final List<Local> locais = new LinkedList<>();
     private final List<Integer> idLocaisVisitados = new LinkedList<>();
+    TreeSet<Local> nosExpandidos = new TreeSet<>();
 
     public void addLocal(Local local) {
         this.locais.add(local);
@@ -19,25 +21,31 @@ public class Cidade {
 
     int calculaMenorCusto(Local pontoPartida, Local pontoDestino) {
         pontoPartida.setCusto(0);
-        expandirNo(pontoDestino);
-
-        return 0;
+        Local proximaExpansao = pontoPartida;
+        while (true) {
+            expandirNo(proximaExpansao);
+            if (nosExpandidos.isEmpty()) {
+                break;
+            }
+            proximaExpansao = nosExpandidos.pollFirst();
+        }
+        Integer custoFinal = pontoDestino.getCusto();
+        return custoFinal == Integer.MAX_VALUE ? -1 : custoFinal;
     }
 
-    private List<Local> expandirNo(Local no) {
+    private void expandirNo(Local no) {
         List<Rua> ruas = this.filtrarRuasNaoVisitadas(no.getRuas());
-        List<Local> nosExpandidos = new LinkedList<>();
         for (Iterator<Rua> iterator = ruas.iterator(); iterator.hasNext();) {
             Rua ruaCorrente = iterator.next();
             Local noDestino = ruaCorrente.getLocalDestino();
             int custoNovaRota = ruaCorrente.getTempo() + no.getCusto();
             if (custoNovaRota < noDestino.getCusto()) {
                 noDestino.setCusto(custoNovaRota);
-                nosExpandidos.add(noDestino);
+                noDestino.setCustoUltimaRua(ruaCorrente.getTempo());
+                this.nosExpandidos.add(noDestino);
             }
         }
         this.idLocaisVisitados.add(no.getNome());
-        return nosExpandidos;
     }
 
     public void addIdLocalVisitado(int id) {

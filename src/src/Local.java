@@ -3,9 +3,18 @@ package src;
 import java.util.LinkedList;
 import java.util.List;
 
-class Local {
+class Local implements Comparable<Local>{
     private int nome;
     private Integer custo = Integer.MAX_VALUE;
+    private int custoUltimaRua;
+
+    public int getCustoUltimaRua() {
+        return custoUltimaRua;
+    }
+
+    public void setCustoUltimaRua(int custoUltimaRua) {
+        this.custoUltimaRua = custoUltimaRua;
+    }
     
     private List<Rua> ruas = new LinkedList<Rua>(); 
 
@@ -39,5 +48,10 @@ class Local {
 
     void somaCusto(int custo) {
         this.custo += custo;
+    }
+    
+    @Override
+    public int compareTo(Local o) {
+        return this.getCustoUltimaRua() - o.getCustoUltimaRua();
     }
 }

@@ -14,8 +14,6 @@ public class Main {
                 int[] linha = readLine(scn);
                 int numeroLocais = linha[0];
                 int numeroRuas = linha[1];
-                System.out.println(numeroLocais);
-                System.out.println(numeroRuas);
                 
                 if (numeroLocais == 0 && numeroRuas == 0) {
                     break;
